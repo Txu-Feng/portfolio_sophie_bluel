@@ -111,6 +111,12 @@ li:hover {
 	width: 80%;
 }
 
+#introduction div {
+	width: 80%;
+	margin: auto;
+	margin-top: 15px;
+}
+
 #introduction article {
 	flex: 1
 }
@@ -121,10 +127,22 @@ li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
+
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
 }
+
+.portfolio-header {
+	display: flex;
+	align-items: baseline;
+	justify-content: center;
+}
+
+.portfolio-header button {
+	margin-left: 20px;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;
@@ -186,3 +204,109 @@ footer nav ul {
 	margin: 2em
 }
 
+.filter {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 37px;
+	margin-bottom: 60px;
+}
+
+.btn {
+	font-family: Syne;
+	color: #1D6154;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: #1D6154 solid 1px;
+	border-radius: 20px;
+	margin: 51px 10px 0 10px;
+	padding: 9px 11px;
+	background-color: white;
+	display: none;
+}
+
+.active {
+	background-color: #1D6154;
+	color: white;
+}
+
+.mdp {
+	display: block;
+}
+
+.bold {
+	font-weight: 600;
+}
+
+.no-decoration {
+	text-decoration: none;
+}
+
+a {
+	color: black;
+}
+
+.no-decoration:hover {
+	color: #B1663C;
+}
+
+.msg-error {
+	text-align: center;
+	color: red;
+	font-weight: 600;
+	margin-top: 10px;
+}
+
+#toolbar {
+	margin: 0;
+	background-color: black;
+	height: 59px;
+	width: 100%;
+	display: none;
+	align-items: center;
+	justify-content: center;
+}
+
+.toolbar-btn-edit {
+	background: black;
+	border: none;
+	width: 200px;
+	height: 59px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	color: white;
+	font-family: Work Sans;
+}
+
+.toolbar-btn-edit i {
+	margin-right: 12px;
+}
+
+.toolbar-btn-publish {
+	background: #fff;
+	border: none;
+	border-radius: 60px;
+	width: 216px;
+	height: 38px;
+	font-family: Work Sans;
+	font-weight: bold;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.btn-edit{
+	border: none;
+	background: none;
+	width: 60px;
+	display: none;
+	cursor: pointer;
+	font-family: work Sans;
+}
+.btn-edit i{
+	margin-right: 10px;
+	color: #110808;
+}
