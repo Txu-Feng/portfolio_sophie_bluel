@@ -21,12 +21,12 @@ async function FetchUserLogin() {
             window.location.href = "./index.html";
             const dataUser = await response.json();
             //console.log(dataUser);
-            localStorage.setItem("token", dataUser.token);
-            localStorage.setItem("login", true);
+            sessionStorage.setItem("token", dataUser.token);
+            sessionStorage.setItem("login", true);
         }
         else {
-            localStorage.setItem("token", undefined);
-            localStorage.setItem("login", false);
+            sessionStorage.setItem("token", undefined);
+            sessionStorage.setItem("login", false);
             document.querySelector(".msg-error").innerText = "L'email ou le mot de passe saisi est incorrect";
             document.getElementById("password").after(p);
         }
