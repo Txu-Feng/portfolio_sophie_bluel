@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style/style.css">
 	<script src="https://kit.fontawesome.com/dc3c0fa8b2.js" crossorigin="anonymous"></script>
@@ -20,36 +20,35 @@
 			<button class="modal-xmark modal-close"><i class="fa-solid fa-xmark fa-xl"></i></button>
 			<h2>Galerie photo</h2>
 			<div class="modal-gallery"></div>
-			<hr>
+			<div class="separator"></div>
 			<button class="modal-btn">Ajouter une photo</button>
 			<p title="Attention vous allez supprimer toute la galerie!!!">Supprimer la galerie</p>
 		</div>
 		<div id="modal-page-two">
-			<button class="modal-arrow-left modal-previous"><i class="fa-solid fa-arrow-left-long"></i></button>
+			<button class="modal-arrow-left modal-previous"><i class="fa-solid fa-arrow-left-long fa-xl"></i></button>
 			<button class="modal-xmark modal-close"><i class="fa-solid fa-xmark fa-xl"></i></button>
 			<h2 class="modal-title">Ajout photo</h2>
 
 			<div class="image-container">
 				<i class="fa-regular fa-image"></i>
-				<input type="file" class="input-addpic" id="addPic" name="addPic" accept="jpg/png">
+				<label class="label-image-upload" for="image-upload">+ Ajouter photo</label>
+				<input type="file" class="input-image-upload" id="image-upload" name="image-upload" accept="jpg/png">
 				<p>jpg, png : 4mo max</p>
 			</div>
 
 			<div class="form-container">
-				<form class="formmodal2" method="post">
-					<label for="title">Titre</label>
-					<input class="title" id="title" type="text" >
-					<label for="category">Catégorie</label>
-					<select class="category" id="category" name="category">
+				<form method="post">
+					<label for="image-title">Titre</label>
+					<input class="input-image-title" id="image-title" type="text" >
+					<label for="image-category">Catégorie</label>
+					<select class="select-image-category" id="image-category" name="image-category">
 						<option value=""> </option>
 						<option id="1" class="selectcategory">Objets</option>
 						<option id="2" class="selectcategory">Appartements</option>
 						<option id="3" class="selectcategory">Hotels & Restaurants</option>
 					</select>
-					<div class="trait-container">
-						<div class="trait"></div>
-					</div>
-					<button type="submit" class="valider">Valider</button>
+					<div class="separator"></div>
+					<button type="submit" class="validate modal-btn">Valider</button>
 				</form>
 			</div>
 			<p class="msg-error"></p>

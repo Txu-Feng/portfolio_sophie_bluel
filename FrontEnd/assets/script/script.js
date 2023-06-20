@@ -61,10 +61,64 @@ const displayWorks = (data) => {
         figure.appendChild(figcaption);
         modalFigure.appendChild(modalFigcaption);
 
+        ///////////////////////////////////
+
+        const workId = element.id;
+
+        // const deleteButton = createButtonElement(['modal-delete-button']);
+        const deleteButton = document.createElement("div");
+        deleteButton.classList.add("modal-delete-button");
+        // const deleteIcon = createIconElement("fa-solid","fa-trash-can");
+        const deleteIcon = document.createElement("i");
+        deleteIcon.classList.add("fa-solid","fa-trash-can");
+
+        deleteButton.style.cursor = 'pointer';
+        deleteButton.appendChild(deleteIcon);
+
+        deleteButton.addEventListener('click', () => {
+            //const confirmDeleteButton = createButtonElement(['confirm-delete'],"Confirmer suppression");
+            const confirmDeleteButton = document.createElement("div");
+            confirmDeleteButton.textContent = "Confirmer suppression";
+            confirmDeleteButton.addEventListener("click", function() {
+              //deleteWork(workId);
+            const token = window.localStorage.getItem('token');
+            fetch(`http://` + window.location.hostname + `:5678/api/works/${workId}`, {
+                method: 'DELETE',
+                headers: {
+                'Authorization': `Bearer ${token}`,
+                },
+            }).then(response => {
+                if (response.ok) {
+                  // Refresh gallery display after deletion
+                  //refreshGallery("#modal-gallery");
+                  //refreshGallery(".gallery");
+                  fetchWorks();
+                } else if(response.status === 401) {
+                  // Handle deletion errors
+                  //displayErrorMessage("Utilisateur non autorisé!!! Vous allez etre redirigé vers la page connexion.", ".modal-title");
+                  //setTimeout(() => {
+                    //window.location.href = "login.html";
+                  //}, 4000);
+                }
+              })
+              .catch(error => {
+                //displayErrorMessage("Une erreur s'est produite lors de la suppression de l'élément.", ".modal-title",error);
+              });  
+
+
+              //
+              modalFigure.removeChild(confirmDeleteButton);
+            });
+            modalFigure.appendChild(confirmDeleteButton);
+        });
+
+        modalFigure.appendChild(deleteButton);
+
+        ///////////////////////////////////
+
         gallery.appendChild(figure);
         modalGallery.appendChild(modalFigure);
 
-        /* ajout dans la modale gallery */
         
     });
 }
@@ -156,6 +210,7 @@ logout.addEventListener("click", () => {
 
 document.querySelector(".modal-open").addEventListener("click" , () => {
     document.getElementById("modal").style = "display : block";
+    document.getElementById("modal-page-two").style = "display : none";
     document.querySelector(".modal-wrapper").scrollIntoView({ behavior: "smooth", block: "start" });
     fetchWorks();
 });
@@ -177,4 +232,3 @@ document.querySelector('.modal-arrow-left').addEventListener('click', () => {
     document.getElementById("modal-page-one").style = "display : flex";
     document.getElementById("modal-page-two").style = "display : none";
 });
-

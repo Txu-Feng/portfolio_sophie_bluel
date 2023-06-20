@@ -332,6 +332,7 @@ a {
 	font-family: 'Syne';
 	color: #B1663C;
 	cursor: pointer;
+	margin-bottom: 48px;
 }
 
 .modal-gallery{
@@ -340,7 +341,6 @@ a {
 	grid-template-rows: repeat(3, 1fr);
 	grid-column-gap: 6px;
 	grid-row-gap: 10px;
-	border-bottom:1px solid #B3B3B3;
 	padding-bottom: 46px;
 }
 
@@ -349,7 +349,7 @@ a {
 	width: 78px;
 }
 
-#modal-page-one h2 {
+#modal-wrapper h2 {
 	text-align: center;
 	font-family: Work Sans;
 	color: black;
@@ -398,7 +398,7 @@ a {
 	justify-content: center;
     width: 630px;
 	max-height: 730px;
-	padding: 60px 0px 48px 0px;
+	padding: 60px 0px 0px 0px;
 	background: #FFFFFF;
 	border-radius: 10px;
 	transform : translate(-50%,-50%);
@@ -411,7 +411,7 @@ a {
 	border: none;
 }
 
-.modal-xmark{
+.modal-xmark {
 	top:26px;
 	right: 30px;
 }
@@ -423,10 +423,83 @@ a {
 
 .image-container {
 	background: #E8F1F6;
-	width: 70%;
+	width: 420px;
+	height: 169px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	position: relative;
+	margin-bottom: 30px;
+}
+
+.image-container i {
+	font-size: 45px;
+	color: #B9C5CC;
+	margin-top: 28px;
+}
+
+.label-image-upload {
+	cursor: pointer;
+	background: #CBD6DC;
+	color: #306685;
+	margin-top: 21px;
+	font-weight: 500;
+	font-size: 14px;
+	width: 137px;
+	height: 36px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50px;
+}
+
+.input-image-upload {
+	display: none;
+}
+
+.image-container p {
+	margin-top: 7px;
+	margin-bottom: 19px;
+}
+
+.form-container form{
+	display: flex;
+	flex-direction: column;
+}
+
+.input-image-title {
+	width: 420px;
+	height: 31px;
+	border: none;
+	background: #FFFFFF;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	margin-bottom: 21px;
+	margin-top: 10px;
+}
+
+.select-image-category {
+	width: 424px;
+	height: 31px;
+	border: none;
+	background: #FFFFFF;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	margin-top: 10px;
+	margin-bottom: 47px;
+	outline-offset: solid #B3B3B3 2px;
+}
+
+.form-container label {
+	font-weight: 500;
+	font-size: 14px;
+}
+
+.form-container button {
+	margin-top: 32px;
+}
+
+.separator {
+	width: 420px;
+	height: 2px;
+	background: #B3B3B3;
+	margin: 0 auto;
 }
