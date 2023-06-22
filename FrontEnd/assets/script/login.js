@@ -20,7 +20,7 @@ async function FetchUserLogin() {
         if (response.ok) {
             window.location.href = "./index.html";
             const dataUser = await response.json();
-            //console.log(dataUser);
+            console.log(dataUser);
             sessionStorage.setItem("token", dataUser.token);
             sessionStorage.setItem("login", true);
         }

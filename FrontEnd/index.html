@@ -29,26 +29,26 @@
 			<button class="modal-xmark modal-close"><i class="fa-solid fa-xmark fa-xl"></i></button>
 			<h2 class="modal-title">Ajout photo</h2>
 
-			<div class="image-container">
-				<i class="fa-regular fa-image"></i>
-				<label class="label-image-upload" for="image-upload">+ Ajouter photo</label>
-				<input type="file" class="input-image-upload" id="image-upload" name="image-upload" accept="jpg/png">
-				<p>jpg, png : 4mo max</p>
-			</div>
+			
 
 			<div class="form-container">
 				<form method="post">
+					<div class="image-container">
+						<img class="preview-image">
+						<i class="fa-regular fa-image"></i>
+						<label class="label-image-upload" for="image-upload">+ Ajouter photo</label>
+						<input type="file" class="input-image-upload" id="image-upload" name="image-upload" accept="jpg/png">
+						<p>jpg, png : 4mo max</p>
+					</div>
 					<label for="image-title">Titre</label>
 					<input class="input-image-title" id="image-title" type="text" >
 					<label for="image-category">Catégorie</label>
 					<select class="select-image-category" id="image-category" name="image-category">
 						<option value=""> </option>
-						<option id="1" class="selectcategory">Objets</option>
-						<option id="2" class="selectcategory">Appartements</option>
-						<option id="3" class="selectcategory">Hotels & Restaurants</option>
 					</select>
 					<div class="separator"></div>
-					<button type="submit" class="validate modal-btn">Valider</button>
+					<p class="form-error"></p>
+					<button type="submit" id="validate" class="modal-btn">Valider</button>
 				</form>
 			</div>
 			<p class="msg-error"></p>

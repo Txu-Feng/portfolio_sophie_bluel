@@ -338,7 +338,7 @@ a {
 .modal-gallery{
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
-	grid-template-rows: repeat(3, 1fr);
+	/* grid-template-rows: repeat(3, 1fr); */
 	grid-column-gap: 6px;
 	grid-row-gap: 10px;
 	padding-bottom: 46px;
@@ -347,15 +347,6 @@ a {
 .modal-gallery img{
 	height: 104px;
 	width: 78px;
-}
-
-#modal-wrapper h2 {
-	text-align: center;
-	font-family: Work Sans;
-	color: black;
-	font-size: 26px;
-	font-weight: 400;
-	margin-bottom: 40px;
 }
 
 .modal-btn {
@@ -497,9 +488,46 @@ a {
 	margin-top: 32px;
 }
 
+
+
 .separator {
 	width: 420px;
 	height: 2px;
 	background: #B3B3B3;
 	margin: 0 auto;
+}
+
+.modal-delete-button {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 17px;
+	width: 17px;
+	border-radius: 2px;
+	background-color: black;
+	transform: translate(55px, -115px);
+	color: white;
+}
+
+.preview-image {
+	position: absolute;
+	height: 170px;
+	width: 140px;
+	display: none;
+}
+
+#validate:disabled {
+	background-color: grey;
+}
+
+.form-error {
+	font-family: Work Sans;
+	display: block;
+	position: absolute;
+	color: red;
+	top: 480px;
+	align-self: center;
+	font-weight: 600;
+	margin-top: 10px;
 }

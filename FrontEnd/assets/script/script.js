@@ -1,4 +1,5 @@
 let works;
+let file;
 
 async function fetchWorks() {
     try {
@@ -35,6 +36,7 @@ const displayWorks = (data) => {
     gallery.innerHTML = "";
     const modalGallery =  document.querySelector(".modal-gallery");
     modalGallery.innerHTML = "";
+    modalGallery.style = "grid-template-rows: repeat(" + (data.length / 5) + ", 1fr);";
     data.forEach(element => {
         //console.log(element.id, element.title);
 
@@ -65,51 +67,45 @@ const displayWorks = (data) => {
 
         const workId = element.id;
 
-        // const deleteButton = createButtonElement(['modal-delete-button']);
+
         const deleteButton = document.createElement("div");
         deleteButton.classList.add("modal-delete-button");
-        // const deleteIcon = createIconElement("fa-solid","fa-trash-can");
+
         const deleteIcon = document.createElement("i");
-        deleteIcon.classList.add("fa-solid","fa-trash-can");
+        deleteIcon.classList.add("fa-solid","fa-trash-can", "fa-2xs");
 
         deleteButton.style.cursor = 'pointer';
         deleteButton.appendChild(deleteIcon);
 
         deleteButton.addEventListener('click', () => {
-            //const confirmDeleteButton = createButtonElement(['confirm-delete'],"Confirmer suppression");
-            const confirmDeleteButton = document.createElement("div");
-            confirmDeleteButton.textContent = "Confirmer suppression";
-            confirmDeleteButton.addEventListener("click", function() {
-              //deleteWork(workId);
-            const token = window.localStorage.getItem('token');
-            fetch(`http://` + window.location.hostname + `:5678/api/works/${workId}`, {
-                method: 'DELETE',
-                headers: {
-                'Authorization': `Bearer ${token}`,
-                },
-            }).then(response => {
-                if (response.ok) {
-                  // Refresh gallery display after deletion
-                  //refreshGallery("#modal-gallery");
-                  //refreshGallery(".gallery");
-                  fetchWorks();
-                } else if(response.status === 401) {
-                  // Handle deletion errors
-                  //displayErrorMessage("Utilisateur non autorisé!!! Vous allez etre redirigé vers la page connexion.", ".modal-title");
-                  //setTimeout(() => {
-                    //window.location.href = "login.html";
-                  //}, 4000);
-                }
-              })
-              .catch(error => {
-                //displayErrorMessage("Une erreur s'est produite lors de la suppression de l'élément.", ".modal-title",error);
-              });  
+
+            const confirmResponse =  confirm("souhaitez vous confirmer la suppression");
+
+            if(confirmResponse) {
+                const token = window.sessionStorage.getItem('token');
+                fetch(`http://` + window.location.hostname + `:5678/api/works/${workId}`, {
+                    method: 'DELETE',
+                    headers: {
+                    'Authorization': `Bearer ${token}`,
+                    },
+                }).then(response => {
+                    if (response.ok) {
+                    // Refresh gallery display after deletion
+                    fetchWorks();
+                    } else if(response.status === 401) {
+                    // Handle deletion errors
+                    alert("Utilisateur non autorisé!!! Vous allez etre redirigé vers la page connexion");
+                    setTimeout(() => {
+                        window.location.href = "login.html";
+                    }, 2000);
+                    }
+                })
+                .catch(error => {
+                    alert("Une erreur s'est produite lors de la suppression de l'élément.");
+                });  
 
 
-              //
-              modalFigure.removeChild(confirmDeleteButton);
-            });
-            modalFigure.appendChild(confirmDeleteButton);
+            }
         });
 
         modalFigure.appendChild(deleteButton);
@@ -128,7 +124,7 @@ async function fetchCategories() {
         const response = await fetch("http://" + window.location.hostname + ":5678/api/categories");
         const data = await response.json();
         //console.log(data);
-        displayCategoriesFilter(data);
+        displayCategoriesFilterAndOption(data);
     }
     catch (error) {
         console.log(error);
@@ -137,16 +133,24 @@ async function fetchCategories() {
 
 fetchCategories();
 
-const displayCategoriesFilter = (categories) => {
+const displayCategoriesFilterAndOption = (categories) => {
+
+    const selectImageCategory = document.querySelector('.select-image-category');
+
     categories.forEach(element => {
         //console.log(element.id, element.name);
-        //const button = `<button class="btn" id=${element.id}>${element.name}</button>`;
-        //document.querySelector(".filter").innerHTML += button;
+        
         const button = document.createElement("button");
         button.classList.add("btn");
         button.setAttribute("id", element.id);
         button.innerText = element.name;
         document.querySelector(".filter").appendChild(button);
+
+        const option = document.createElement('option');
+        option.textContent = element.name;
+        option.value = element.id;
+        selectImageCategory.appendChild(option);
+
     });
     const btns = document.querySelectorAll(".btn");
     //console.log(btns);
@@ -218,17 +222,90 @@ document.querySelector(".modal-open").addEventListener("click" , () => {
 document.querySelectorAll(".modal-close").forEach(element => {
     element.addEventListener("click", () => {
         document.getElementById("modal").style = "display : none";
-        document.getElementById("modal-page-one").style = "display : flex";
-        document.getElementById("modal-page-two").style = "display : none";
+        initForm();
     });
 });
 
 document.querySelector('.modal-btn').addEventListener('click', () => {
     document.getElementById("modal-page-one").style = "display : none";
     document.getElementById("modal-page-two").style = "display : flex";
+    document.getElementById('validate').disabled = true;
 });
 
 document.querySelector('.modal-arrow-left').addEventListener('click', () => {
+    initForm();
+});
+
+
+document.querySelector('.input-image-upload').addEventListener('change', (e) => {
+    file = e.target.files[0];
+    //const file = e.target.files[0];
+    const previewImage = document.querySelector(".preview-image");
+    previewImage.src = URL.createObjectURL(file);
+    previewImage.style = "display : flex";
+    verifyForm();
+});
+
+document.querySelector('.input-image-title').addEventListener('change', (e) => {
+    verifyForm();
+});
+
+document.querySelector('.select-image-category').addEventListener('change', (e) => {
+    verifyForm();
+});
+
+document.getElementById('validate').addEventListener('click', async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    const uploadImage = file;
+    const uploadTitle = document.querySelector('.input-image-title').value;
+    const uploadCategory = document.querySelector('.select-image-category').value;
+    if (uploadImage && uploadTitle && uploadCategory) {
+        formData.append("image", uploadImage);
+        formData.append("title", uploadTitle);
+        formData.append("category", uploadCategory);
+        //console.log(formData);
+        fetch("http://" + window.location.hostname + ":5678/api/works", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${sessionStorage.token}`,
+            },
+            body: formData,
+        }).then(response => {
+            if(response.ok){
+                alert("ajout réussi");
+                fetchWorks();
+                initForm();
+            } else {
+                document.querySelector('.form-error').textContent = "problème lors de l'envoi du formulaire";
+            }
+        }).catch(error => {
+            alert("Une erreur s'est produite lors de l'envoi du formulaire.");
+        });
+    }
+    
+});
+
+const verifyForm = () => {
+    if (file 
+    && document.querySelector('.input-image-title').value 
+    && document.querySelector('.select-image-category').value) {
+        document.getElementById('validate').disabled = false;
+        document.querySelector('.form-error').textContent = "";
+    } else {
+        document.querySelector('.form-error').textContent = "veuillez compléter le formulaire";
+    }
+}
+
+const initForm = () => {
     document.getElementById("modal-page-one").style = "display : flex";
     document.getElementById("modal-page-two").style = "display : none";
-});
+    const previewImage = document.querySelector(".preview-image");
+    previewImage.src = "";
+    previewImage.style = "display : none";
+    document.querySelector('.input-image-upload').value = "";
+    document.getElementById('validate').disabled = true;
+    document.querySelector('.input-image-title').value = "";
+    document.querySelector('.select-image-category').value = "";
+    document.querySelector('.form-error').textContent = "";
+}
