@@ -5,7 +5,7 @@ document.querySelector('input[type="submit"]').addEventListener("click", functio
 
 async function FetchUserLogin() {
     try {
-        const response = await fetch("http://"+ window.location.hostname +":5678/api/users/login", {
+        const response = await fetch("http://localhost:5678/api/users/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

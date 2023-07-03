@@ -3,7 +3,7 @@ let file;
 
 async function fetchWorks() {
     try {
-        const response = await fetch("http://" + window.location.hostname + ":5678/api/works");
+        const response = await fetch("http://localhost:5678/api/works");
         const data = await response.json();
         //console.log(data);
         displayWorks(data);
@@ -17,7 +17,7 @@ async function fetchWorks() {
 
 async function fetchWorks() {
     try {
-        const response = await fetch("http://" + window.location.hostname + ":5678/api/works");
+        const response = await fetch("http://localhost:5678/api/works");
         const data = await response.json();
         //console.log(data);
         displayWorks(data);
@@ -81,9 +81,10 @@ const displayWorks = (data) => {
 
             const confirmResponse =  confirm("souhaitez vous confirmer la suppression");
 
+
             if(confirmResponse) {
                 const token = window.sessionStorage.getItem('token');
-                fetch(`http://` + window.location.hostname + `:5678/api/works/${workId}`, {
+                fetch("http://localhost:5678/api/works/" + workId, {
                     method: 'DELETE',
                     headers: {
                     'Authorization': `Bearer ${token}`,
@@ -121,7 +122,7 @@ const displayWorks = (data) => {
 
 async function fetchCategories() {
     try {
-        const response = await fetch("http://" + window.location.hostname + ":5678/api/categories");
+        const response = await fetch("http://localhost:5678/api/categories");
         const data = await response.json();
         //console.log(data);
         displayCategoriesFilterAndOption(data);
@@ -240,10 +241,16 @@ document.querySelector('.modal-arrow-left').addEventListener('click', () => {
 document.querySelector('.input-image-upload').addEventListener('change', (e) => {
     file = e.target.files[0];
     //const file = e.target.files[0];
-    const previewImage = document.querySelector(".preview-image");
-    previewImage.src = URL.createObjectURL(file);
-    previewImage.style = "display : flex";
-    verifyForm();
+
+    if (file.type==="image/jpeg" || file.type==="image/png") {
+        const previewImage = document.querySelector(".preview-image");
+        previewImage.src = URL.createObjectURL(file);
+        previewImage.style = "display : flex";
+        verifyForm();
+    } else {
+        document.querySelector('.form-error').textContent = "veuillez téléverser une image au format jpg ou png";
+    }
+
 });
 
 document.querySelector('.input-image-title').addEventListener('change', (e) => {
@@ -265,7 +272,7 @@ document.getElementById('validate').addEventListener('click', async (e) => {
         formData.append("title", uploadTitle);
         formData.append("category", uploadCategory);
         //console.log(formData);
-        fetch("http://" + window.location.hostname + ":5678/api/works", {
+        fetch("http://localhost:5678/api/works", {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${sessionStorage.token}`,
@@ -308,4 +315,5 @@ const initForm = () => {
     document.querySelector('.input-image-title').value = "";
     document.querySelector('.select-image-category').value = "";
     document.querySelector('.form-error').textContent = "";
+    file = null;
 }
