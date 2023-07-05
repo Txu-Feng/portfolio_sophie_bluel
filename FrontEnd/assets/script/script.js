@@ -15,20 +15,6 @@ async function fetchWorks() {
     }
 }
 
-async function fetchWorks() {
-    try {
-        const response = await fetch("http://localhost:5678/api/works");
-        const data = await response.json();
-        //console.log(data);
-        displayWorks(data);
-        works = data;
-        //console.log(works);
-    }
-    catch (error) {
-        console.log(error);
-    }
-}
-
 fetchWorks();
 
 const displayWorks = (data) => {
@@ -154,7 +140,7 @@ const displayCategoriesFilterAndOption = (categories) => {
 
     });
     const btns = document.querySelectorAll(".btn");
-    //console.log(btns);
+    //chonsole.log(btns);
     for (let i=0 ; i<btns.length; i++) {
         if(!sessionStorage.login){
             btns[i].style = "display : flex";
@@ -163,7 +149,7 @@ const displayCategoriesFilterAndOption = (categories) => {
                     return element.categoryId === i
                 });
                 if(i===0){
-                    updateFilter(i, btns.length, btns);
+                    updateFilter(i, btns.lengt, btns);
                     fetchWorks();
                 } else {
                     updateFilter(i, btns.length, btns);
@@ -280,7 +266,7 @@ document.getElementById('validate').addEventListener('click', async (e) => {
             body: formData,
         }).then(response => {
             if(response.ok){
-                alert("ajout réussi");
+                //alert("ajout réussi");
                 fetchWorks();
                 initForm();
             } else {
@@ -301,6 +287,7 @@ const verifyForm = () => {
         document.querySelector('.form-error').textContent = "";
     } else {
         document.querySelector('.form-error').textContent = "veuillez compléter le formulaire";
+        document.getElementById('validate').disabled = true;
     }
 }
 
